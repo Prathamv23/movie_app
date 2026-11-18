@@ -146,12 +146,18 @@ body{
     background-color: rgb(14, 13, 13);
     padding: 20px;
     color: azure;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
 }
 header{
     text-align: center;
     font-size: 24px;
     font-family: Arial, Helvetica, sans-serif;
     margin-bottom: 12px;
+
 }
 main{
     padding: 20px;
@@ -162,6 +168,7 @@ main{
 form{
     padding: 10px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: right;
     gap: 10px;
 }
@@ -194,7 +201,6 @@ form{
 }
 
 #status{
-  margin-left: 100px;
   padding: 12px;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -202,7 +208,7 @@ form{
   display: flex;
   flex-direction: column;
   background-color: black;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
   height: 100%;
   font-family:Arial, Helvetica, sans-serif;
   padding: 20px;
@@ -215,6 +221,7 @@ form{
   border: 1px solid #2c303d;
   border-radius: 5px;
   overflow: hidden; 
+  
   
 }
 
@@ -231,6 +238,7 @@ form{
 .r-b{
     padding: 8px;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
     color: rgb(255, 136, 0);

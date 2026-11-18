@@ -1,11 +1,9 @@
-const api = "https://api.tvmaze.com/singlesearch/shows?q=dexter"
+import { doc_elements } from "./functions/elements.js";
+import { fetch_rsponse } from "./api/api_fetch.js";
 
-const input = document.querySelector("#inp");
-const submit = document.querySelector("#sub");
-const form = document.querySelector("#form");
-const movie_card = document.querySelector("#movie-card");
-const status = document.querySelector("#status");
-const error = document.querySelector("#err");
+
+
+const {input,submit,form,movie_card,status,err} = doc_elements();
 
 
 let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
@@ -15,14 +13,13 @@ function save_favorites(){
     console.log(favorites);
 }
 
+
 async function get_movie(m_name){
 
     try{
         movie_card.innerHTML = "";
-        const response = await fetch(`https://api.tvmaze.com/singlesearch/shows?q=${m_name}`);
-        const data = await response.json();
         
-         
+        const data = await fetch_rsponse(m_name);
 
         if(data){
             status.textContent = await "Best Results";
@@ -43,7 +40,6 @@ async function get_movie(m_name){
             err.style.color = "red";
             err.style.fontSize = "34px"
         }
-
     }
     catch(e){
         console.log(e);
@@ -59,7 +55,7 @@ function card_layout(name, image, rating) {
     card.className = "card";
     card.innerHTML = `
     
-        <a href="movie_detail.html"style="cursor: pointer"><img src="${image}" alt="${name}"></a>
+        <a href="movie_detail.html?q=${name}"style="cursor: pointer" target = "_blank"><img src="${image}" alt="${name}"></a>
         <div class="m-detail">
             <h2>${name}</h2>
             <div class="r-b">
