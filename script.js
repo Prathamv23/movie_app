@@ -1,18 +1,24 @@
 import { doc_elements } from "./functions/elements.js";
 import { fetch_rsponse } from "./api/api_fetch.js";
+import { save_favorites, favorites,add_favorite, remove_favorite } from "./storage/local_storage.js";
 
 
 
 const {input,submit,form,movie_card,status,err} = doc_elements();
 
 
-let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+// let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
-function save_favorites(){
-    localStorage.setItem("favorites",JSON.stringify(favorites));
-    console.log(favorites);
-}
+// export function save_favorites(){
+//     localStorage.setItem("favorites",JSON.stringify(favorites));
+//     console.log(favorites);
+// }
 
+
+// async function all_movies(){
+//     const response = await fetch("");
+
+// }
 
 async function get_movie(m_name){
 
@@ -21,17 +27,22 @@ async function get_movie(m_name){
         
         const data = await fetch_rsponse(m_name);
 
-        if(data){
-            status.textContent = await "Best Results";
+        if(data.length !== 0){
+            status.textContent = "Best Results";
             err.textContent = "";
-            console.log(data);
-            const name = data.name;
+            data.forEach(element => {
+                const name = element.show.name;
 
-            const image = data.image?.medium ?? "images/no_image.png";
+                const image = element.show.image?.medium ?? "images/no_image.png";
+                
+                const rating = element.show.rating?.average ?? "No Rating";
+                
+                card_layout(name,image,rating);
+                console.log(element)
+            });
             
-            const rating = data.rating?.average ?? "No Rating";
-
-            display(name,image,rating);
+            console.log(data);
+            
             return data;
         }
         else{
@@ -75,14 +86,14 @@ function card_layout(name, image, rating) {
         btn.style.color = isLiked ? '#e0245e' : '#555';
 
         if (isLiked) {
-            favorites.push({
+            add_favorite({
                 "name": name,
                 "image": image,
                 "rating": rating,
                 "isLiked": true
             });
         } else {
-            favorites = favorites.filter(item => item.name !== name);
+            remove_favorite(name);
             display_fav();
         }
         save_favorites();
@@ -100,29 +111,11 @@ function display_fav(){
   
 }
 
-function display(name,image,rating){
+// function display(name,image,rating){
+//     movie_card.innerHTML = "";
+//     card_layout(name, image, rating);
 
-    // movie_list.innerHTML = "";
-
-    // const li = document.createElement("li");
-   
-    // li.textContent = name;
-    // console.log(name,image,rating);
-    // movie_list.appendChild(li);
-
-
-    // favorites.forEach(ele => {
-    //    const li = document.createElement("li");
-    //    li.className = "m-list";
-       
-    //    const m_name = document.createElement("span");
-    //    m_name.textContent = ele.name;
-    // }); 
-
-    movie_card.innerHTML = "";
-    card_layout(name, image, rating);
-
-}
+// }
 
 form.addEventListener("submit",(e)=>{
     e.preventDefault();
