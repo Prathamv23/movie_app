@@ -309,11 +309,32 @@ body {
 .sk-pill { display: inline-block; width: 70px; height: 24px; margin-right: 8px; border-radius: 12px; }
 .sk-card-img { width: 100%; height: 180px; margin-bottom: 10px; }
 
+@media (max-width: 1024px) {
+    .main {
+        padding: 1.5rem 1rem;
+    }
+
+    .detail-page {
+        grid-template-columns: minmax(0, 2fr) minmax(220px, 1fr);
+        gap: 1.25rem;
+    }
+
+    #cast {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .casts-det img {
+        height: 250px;
+    }
+}
 
 @media (max-width: 768px) {
     .name-detail {
         grid-template-columns: 1fr;
+        grid-template-rows: auto;
         text-align: center;
+        padding: 1.5rem;
     }
 
     #m_img {
@@ -322,7 +343,135 @@ body {
         margin: 0 auto;
     }
 
+    #name {
+        font-size: 1.8rem;
+        align-self: center;
+    }
+
     .detail-page {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    #cast {
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+
+    .casts-det img {
+        height: 240px;
+    }
+
+    #main-details > section,
+    .cast-sec {
+        padding: 1.25rem;
+    }
+
+    #seasons {
+        max-height: 450px;
+    }
+}
+
+@media (max-width: 480px) {
+    .main {
+        padding: 1rem 0.75rem;
+    }
+
+    .name-detail {
+        padding: 1rem;
+        gap: 0.75rem;
+    }
+
+    #m_img {
+        max-width: 180px;
+    }
+
+    #name {
+        font-size: 1.5rem;
+    }
+
+    #detail {
+        font-size: 0.9rem;
+        text-align: left;
+    }
+
+    .detail-page {
+        gap: 1rem;
+    }
+
+    .cast-sec {
+        padding: 0.85rem;
+    }
+
+    #cast {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .casts-det img {
+        height: 210px;
+    }
+
+    .casts-det h4 {
+        font-size: 0.8rem;
+        padding: 0 0.5rem;
+    }
+
+    #main-details {
+        gap: 1rem;
+    }
+
+    #main-details > section {
+        padding: 1rem;
+    }
+
+    #show-info h3 {
+        font-size: 1.1rem;
+    }
+
+    #m_watch {
+        width: calc(100% - 20px);
+        margin: 10px;
+        font-size: 15px;
+    }
+
+    .link-tab {
+        gap: 8px;
+    }
+
+    .link-tab a {
+        font-size: 0.85rem;
+        padding: 6px 10px;
+        margin: 0;
+    }
+
+    .season-img {
+        height: 220px;
+    }
+
+    #seasons {
+        max-height: 400px;
+    }
+
+    .sk-poster {
+        width: 100%;
+        height: 240px;
+    }
+
+    .sk-title {
+        width: 80%;
+    }
+}
+
+@media (max-width: 350px) {
+    #cast {
+        grid-template-columns: 1fr;
+    }
+
+    .casts-det img {
+        height: 300px;
+    }
+
+    #name {
+        font-size: 1.3rem;
     }
 }

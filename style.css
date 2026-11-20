@@ -9,9 +9,8 @@ body{
     color: azure;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
-    flex-wrap: wrap;
+    min-height: 100vh;
 }
 header{
     text-align: center;
@@ -20,7 +19,9 @@ header{
     margin-bottom: 12px;
 
 }
-main{
+main {
+    width: 100%;
+    max-width: 1400px;
     padding: 20px;
 }
 #search{
@@ -30,7 +31,7 @@ form{
     padding: 10px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: right;
+    justify-content: flex-end;
     gap: 10px;
 }
 #inp{
@@ -104,4 +105,73 @@ form{
     align-items: center;
     color: rgb(255, 136, 0);
     text-align: center;
+}
+
+
+@media (max-width: 768px) {
+    body {
+        padding: 12px;
+    }
+
+    header {
+        font-size: 21px;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    #movie-card {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 18px;
+    }
+
+    .card img {
+        height: 280px;
+    }
+
+    .m-detail {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 8px;
+    }
+
+    header {
+        font-size: 18px;
+    }
+
+    main {
+        padding: 5px;
+    }
+
+    #search {
+        padding: 10px 5px;
+    }
+
+    #inp {
+        max-width: 50%;
+        width: 100%;
+    }
+
+    #movie-card {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+    }
+
+    .card img {
+        height: 230px;
+    }
+
+    .r-b {
+        padding: 8px;
+        font-size: 13px;
+    }
+
+    .m-detail {
+        padding: 12px;
+    }
 }

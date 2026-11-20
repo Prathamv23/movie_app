@@ -21,7 +21,6 @@ const {input,submit,form,movie_card,status,err} = doc_elements();
 // }
 
 async function get_movie(m_name){
-
     try{
         movie_card.innerHTML = "";
         
@@ -49,7 +48,7 @@ async function get_movie(m_name){
             status.textContent = "";
             err.textContent = "404 movie not available";
             err.style.color = "red";
-            err.style.fontSize = "34px"
+            err.style.fontSize = "34px";
         }
     }
     catch(e){
@@ -66,7 +65,7 @@ function card_layout(name, image, rating) {
     card.className = "card";
     card.innerHTML = `
     
-        <a href="movie_detail.html?q=${name}"style="cursor: pointer" target = "_blank"><img src="${image}" alt="${name}"></a>
+        <a href="movie_detail.html?q=${name}"style="cursor: pointer" ><img src="${image}" alt="${name}"></a>
         <div class="m-detail">
             <h2>${name}</h2>
             <div class="r-b">
@@ -84,6 +83,8 @@ function card_layout(name, image, rating) {
         isLiked = !isLiked;
         btn.innerHTML = isLiked ? '♥' : '♡';
         btn.style.color = isLiked ? '#e0245e' : '#555';
+        
+        
 
         if (isLiked) {
             add_favorite({
