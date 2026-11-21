@@ -28,9 +28,9 @@ favor.addEventListener("click", (e) => {
     e.preventDefault();
 
     if (page_in === "home") {
-        favor.textContent = "Back";
+        favor.textContent = "< Back";
         favor.style.backgroundColor = "red";
-        favor.style.marginRight ="530px";
+        favor.style.marginRight ="65%";
         display_fav();
 
     } else if (page_in === "favorites") {

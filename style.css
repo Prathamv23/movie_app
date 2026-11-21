@@ -75,6 +75,7 @@ form{
 #status{
   padding: 12px;
   font-family: Arial, Helvetica, sans-serif;
+  margin-left: 5%;
 }
 .m-detail{
   display: flex;
