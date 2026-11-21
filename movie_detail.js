@@ -169,7 +169,7 @@ async function cast_det(){
 
 function new_batch(){
 
-    let batch = cast_content.slice(current_index,current_index+limit)
+    let batch = cast_content.slice(current_index,current_index+limit);
     
     batch.forEach(element => {
         const div = document.createElement("div");

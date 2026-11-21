@@ -5,7 +5,11 @@ import { save_favorites, favorites,add_favorite, remove_favorite } from "./stora
 
 
 const {input,submit,form,movie_card,status,err} = doc_elements();
-
+let h_movie = [];
+let current_index = 0;
+const load_content = document.querySelector("#load-more");
+const favor = document.querySelector("#favor");
+let page_in = "home";
 
 // let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
 
@@ -19,6 +23,23 @@ const {input,submit,form,movie_card,status,err} = doc_elements();
 //     const response = await fetch("");
 
 // }
+
+favor.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    if (page_in === "home") {
+        favor.textContent = "Back";
+        favor.style.backgroundColor = "red";
+        favor.style.marginRight ="530px";
+        display_fav();
+
+    } else if (page_in === "favorites") {
+        favor.textContent = "Favorites";
+        favor.style.backgroundColor = " rgb(232, 42, 105)";
+        favor.style.marginRight ="0px";
+        homePage_movie();
+    }
+});
 
 async function get_movie(m_name){
     try{
@@ -95,7 +116,7 @@ function card_layout(name, image, rating) {
             });
         } else {
             remove_favorite(name);
-            display_fav();
+            
         }
         save_favorites();
     });
@@ -106,6 +127,16 @@ function card_layout(name, image, rating) {
 
 function display_fav(){
     movie_card.innerHTML = "";
+    load_content.style.display = "none";
+    page_in = "favorites";
+    
+    // const back = document.createElement("a");
+    // back.className = "back-btn";
+    // back.href = "index.html";
+    // back.textContent = "Back";
+
+    // form.appendChild(back);
+
     status.textContent = "Favorites";
     err.textContent = "";
     favorites.forEach(fav => card_layout(fav.name, fav.image, fav.rating));
@@ -131,8 +162,148 @@ form.addEventListener("submit",(e)=>{
 input.addEventListener("input", () => {
     if (input.value.trim() === "") {
         status.textContent="";
-        display_fav();
+        homePage_movie();
+        page_in = "home";
     }
 });
 
-display_fav();
+async function homePage_movie(){
+    movie_card.innerHTML = "";
+    status.textContent = "";
+    err.textContent = "";
+    page_in = "home";
+
+    current_index = 0;
+
+    const response = await fetch("https://api.tvmaze.com/shows");
+    let data = await response.json();
+
+    console.log(data);
+    h_movie = data;
+
+    homepage_batch();
+    load_content.addEventListener("click",homepage_batch);
+    load_content.style.display = "block";
+
+}
+
+function homepage_batch(){
+    
+    const limit = 12;
+
+    let batch = h_movie.slice(current_index,current_index+limit);
+
+    batch.forEach(element => {
+         const name = element.name;
+
+         const image = element.image?.medium ?? "images/no_image.png";
+                
+         const rating = element.rating?.average ?? "No Rating";
+                
+         card_layout(name,image,rating);
+         console.log(element);
+    });
+
+    current_index+=limit;
+
+     if(current_index>= h_movie.length){
+        load_content.style.display = "none";
+    }
+
+}
+
+
+
+
+// let currentPage = 0;
+// let pagination;
+
+// Create pagination buttons
+// function create_pagination() {
+//     pagination = document.createElement("div");
+//     pagination.className = "pagination";
+
+//     const previousBtn = document.createElement("button");
+//     previousBtn.textContent = "Previous";
+
+//     const pageNumber = document.createElement("span");
+
+//     const nextBtn = document.createElement("button");
+//     nextBtn.textContent = "Next";
+
+//     previousBtn.addEventListener("click", () => {
+//         if (currentPage > 0) {
+//             currentPage--;
+//             load_all_shows();
+//         }
+//     });
+
+//     nextBtn.addEventListener("click", () => {
+//         currentPage++;
+//         load_all_shows();
+//     });
+
+//     pagination.append(previousBtn, pageNumber, nextBtn);
+
+//     movie_card.after(pagination);
+
+//     return { previousBtn, nextBtn, pageNumber };
+// }
+
+// // Load all shows from TVmaze
+// async function load_all_shows() {
+//     try {
+//         movie_card.innerHTML = "";
+//         status.textContent = "Loading shows...";
+//         err.textContent = "";
+
+//         const response = await fetch(
+//             `https://api.tvmaze.com/shows`
+//         );
+
+//         if (!response.ok) {
+//             throw new Error("No more shows available");
+//         }
+
+//         const data = await response.json();
+
+//         status.textContent = "All TV Shows";
+
+//         data.forEach(show => {
+//             const name = show.name;
+
+//             const image = show.image?.medium ?? "images/no_image.png";
+
+//             const rating = show.rating?.average ?? "No Rating";
+
+//             card_layout(name, image, rating);
+//         });
+
+//         // Update pagination
+//     //     const buttons = pagination.querySelectorAll("button");
+//     //     const previousBtn = buttons[0];
+//     //     const nextBtn = buttons[1];
+//     //     const pageNumber = pagination.querySelector("span");
+
+//     //     previousBtn.disabled = currentPage === 0;
+//     //     pageNumber.textContent = `Page ${currentPage + 1 }`;
+
+//     } catch (error) {
+//         console.log(error);
+
+//         err.textContent = "Unable to load shows. Try again.";
+//         err.style.color = "red";
+
+//         // // Don't go beyond the last available page
+//         // if (currentPage > 0) {
+//         //     currentPage--;
+//         // }
+//     }
+// }
+
+// create_pagination();
+// load_all_shows();
+
+homePage_movie();
+
+//display_fav();
